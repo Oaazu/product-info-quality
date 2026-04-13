@@ -1,9 +1,11 @@
-#This file will handle the connection to the database. In this case, it's a SQLite DB. Nothing crazy.
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import DBModelBase
+import os
 
-DATABASE_URL = "sqlite:///test.db"
+# This makes it work both locally and on Streamlit Cloud
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'test.db')}"
 
 engine = create_engine(DATABASE_URL)
 DBModelBase.metadata.create_all(engine)
